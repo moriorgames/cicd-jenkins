@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:4.8.7' }
+    }
 
     stages {
         stage('Clone') {
@@ -16,7 +18,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing ...'
-                echo '.:npm test'
+                sh 'node --version'
             }
         }
         stage('Build') {
