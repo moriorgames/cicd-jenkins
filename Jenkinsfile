@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'node:4.8.7' }
-    }
+    agent any
 
     stages {
         stage('Clone') {
@@ -9,10 +7,11 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Dependencies') {
-            steps {
+        stage('Build') {
+            docker.image('node:4.8.7').inside {
                 echo 'Installing dependencies ...'
                 echo '.:npm install'
+                sh 'docker build -t moriorgames/node-server .'
             }
         }
         stage('Test') {
