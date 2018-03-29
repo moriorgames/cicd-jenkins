@@ -1,16 +1,22 @@
 {
-    "name": "ci-cd-devops",
-    "version": "1.0.0",
-    "description": "A Hello World HTTP server",
-    "main": "main.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node main.js"
-    },
-    "keywords": [
-        "node",
-        "docker",
-        "dockerfile"
-    ],
-    "author": "moriorgames@gmail.com"
+  "name": "ci-cd-devops",
+  "version": "1.0.0",
+  "author": "moriorgames@gmail.com",
+  "description": "A Hello World HTTP server",
+  "main": "main.js",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.5"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/_mocha --recursive ./tests/*.test.js",
+    "start": "node main.js"
+  },
+  "keywords": [
+    "node",
+    "docker",
+    "dockerfile",
+    "jenkins",
+    "ci/cd"
+  ]
 }

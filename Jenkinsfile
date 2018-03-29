@@ -1,11 +1,35 @@
-node {
-    def app
+pipeline {
+    agent any
 
-    stage('Clone repository') {
-        checkout scm
-    }
-
-    stage('Build image') {
-        app = docker.build("moriorgames/node-server")
+    stages {
+        stage('Clone') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Dependencies') {
+            steps {
+                echo 'Installing dependencies ...'
+                echo '.:npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing ...'
+                echo '.:npm test'
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building....'
+                echo '.:docker build'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+                echo '.:docker tag && docker push'
+            }
+        }
     }
 }
