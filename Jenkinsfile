@@ -1,5 +1,8 @@
 node {
     def app
+    environment {
+        IMAGE = "moriorgames/node-server"
+    }
 
     stage('Clone') {
         echo 'Cloning repository...'
@@ -8,7 +11,7 @@ node {
 
     stage('Build') {
         echo 'Building Docker image...'
-        app = docker.build("moriorgames/node-server")
+        app = docker.build($IMAGE)
     }
 
     stage('Test') {
@@ -17,5 +20,10 @@ node {
             sh 'npm install'
             sh 'npm test'
         }
+    }
+
+    stage('Tear Down') {
+        echo 'Removing images...'
+        sh 'docker rmi $IMAGE --force'
     }
 }
