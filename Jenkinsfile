@@ -14,6 +14,7 @@ node {
     stage('Test') {
         echo 'Testing...'
         app.inside {
+            sh 'npm install'
             sh 'npm test'
         }
     }
