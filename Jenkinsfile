@@ -11,7 +11,7 @@ node {
 
     stage('Build') {
         echo 'Building Docker image...'
-        app = docker.build($IMAGE)
+        app = docker.build("${IMAGE}")
     }
 
     stage('Test') {
@@ -24,6 +24,6 @@ node {
 
     stage('Tear Down') {
         echo 'Removing images...'
-        sh 'docker rmi $IMAGE --force'
+        sh 'docker rmi ${IMAGE} --force'
     }
 }
