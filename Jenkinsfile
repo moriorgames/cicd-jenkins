@@ -1,13 +1,20 @@
 node {
+    def app
+
     stage('Clone') {
-        dir('webapp') {
-            echo 'Cloning repository....'
-            checkout scm
-        }
+        echo 'Cloning repository...'
+        checkout scm
     }
-    stage('Create Docker Image') {
-        dir('webapp') {
-            docker.build("node:4.8.7")
+
+    stage('Build') {
+        echo 'Building Docker image...'
+        app = docker.build("moriorgames/node-server")
+    }
+
+    stage('Test') {
+        echo 'Testing...'
+        app.inside {
+            sh 'npm test'
         }
     }
 }
