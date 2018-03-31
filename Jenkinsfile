@@ -1,12 +1,6 @@
 node {
     def app
 
-    stage('Docker Login') {
-        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-            sh 'docker login -u$USERNAME -p$PASSWORD'
-        }
-    }
-
     stage('Build') {
         echo 'Cloning repository...'
         checkout scm
@@ -23,17 +17,14 @@ node {
     }
 
     stage('Push') {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
-            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
 
-            sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:latest"
-            sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
+        sh "docker login -u${DOCKER_REGISTRY_USR} -p${DOCKER_REGISTRY_PWD}"
 
-            sh 'docker login -u$USERNAME -p$PASSWORD'
+        sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
+        sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:latest"
 
-            sh "docker push docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
-            sh "docker push docker.io/moriorgames/node-server:latest"
-        }
+        sh "docker push docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
+        sh "docker push docker.io/moriorgames/node-server:latest"
     }
 
     stage('Tear Down') {
