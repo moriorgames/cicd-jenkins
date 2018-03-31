@@ -19,7 +19,8 @@ WORKDIR     /app
 # Onbuild commands
 ONBUILD ARG NODE_ENV
 ONBUILD ENV NODE_ENV $NODE_ENV
-ONBUILD RUN npm install && npm cache clean --force
+
+RUN npm install && npm cache clean --force
 
 # set a health check
 HEALTHCHECK --interval=5s \

@@ -12,4 +12,7 @@ describe('Executing sandbox test', () => {
     it('Foo Should be length 3', () => {
         expect(foo).to.have.lengthOf(3);
     });
+    // it('Foo Should FAIL', () => {
+    //     expect(foo).to.have.lengthOf(99);
+    // });
 });
