@@ -53,17 +53,4 @@ $ docker push moriorgames/node-server:commit_sha
 $ docker push moriorgames/node-server:latest
 $ docker push docker.io/moriorgames/node-server:latest
 ```
-
-
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
-            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-
-            sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:latest"
-            sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
-
-            sh 'docker login -u$USERNAME -p$PASSWORD'
-
-            sh "docker push docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
-            sh "docker push docker.io/moriorgames/node-server:latest"
-        }
         
