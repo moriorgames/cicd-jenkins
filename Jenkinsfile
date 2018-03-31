@@ -1,12 +1,9 @@
 node {
     def app
 
-    stage('Clone') {
+    stage('Build') {
         echo 'Cloning repository...'
         checkout scm
-    }
-
-    stage('Build') {
         echo 'Building Docker image...'
         app = docker.build("moriorgames/node-server")
     }
@@ -16,6 +13,13 @@ node {
         app.inside {
             sh 'npm install'
             sh 'npm test'
+        }
+    }
+
+    stage('Push') {
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            app.push("${env.BUILD_NUMBER}")
+            app.push("latest")
         }
     }
 
