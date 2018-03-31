@@ -17,9 +17,9 @@ node {
     }
 
     stage('Push') {
-        docker.withRegistry('https://docker.io', 'docker-hub-credentials') {
-            app.push("${env.BUILD_NUMBER}")
-            app.push("latest")
+        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+            sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:latest"
+            sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
         }
     }
 
