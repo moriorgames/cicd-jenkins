@@ -17,7 +17,10 @@ node {
     }
 
     stage('Push') {
-        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-hub-credentials',
+            usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+
+            sh 'echo uname=$USERNAME pwd=$PASSWORD'
             sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:latest"
             sh "docker tag moriorgames/node-server docker.io/moriorgames/node-server:${env.BUILD_NUMBER}"
 
