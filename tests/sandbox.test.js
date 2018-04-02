@@ -16,7 +16,4 @@ describe('Executing sandbox test', () => {
     it('A new Test Added to the project', () => {
         expect(fuzzy).to.have.lengthOf(7);
     });
-    it('Foo Should FAIL', () => {
-        expect(foo).to.have.lengthOf(99);
-    });
 });
